@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <title>Survivors Vault — Survivors Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- ══ EMBEDDED DATA — auto-updated on export ══ -->
+  <script type="application/json" id="sv-config">
+  {
+    "adminPassword": "admin",
+    "instagramUrl": "https://instagram.com/survivorsproject",
+    "heroQuote": "I didn't want to be defined by what happened to me. I wanted to be known for how I chose to live after it.",
+    "heroQuoteAuthor": "Meera A.",
+    "heroQuoteRole": "Contributor · Survivors Project, 2024"
+  }
+  </script>
+  <script type="application/json" id="sv-stories">
+  []
+  </script>
+
+  <style>
+    :root{
+      --ink:#2E1B2E;--ink-soft:#5A4060;
+      --rose:#C4848F;--rose-light:#E8C4C8;
+      --sage:#7A9E8A;--sage-light:#C2D9CE;
+      --linen:#F8F3EE;--linen-mid:#EDE6DE;--white:#FDFAF7;
+      --body:'Source Sans 3',sans-serif;--head:'Lora',Georgia,serif;
+      --max:1160px;--gap:clamp(1.5rem,4vw,3rem);
+    }
+    @media(prefers-color-scheme:dark){
+      :root{--ink:#F0E8F0;--ink-soft:#C0A8C8;--rose:#D4909A;--rose-light:#6A3840;
+        --linen:#1E1420;--linen-mid:#2A1E2E;--white:#17101A;--sage-light:#2A4A3A;}
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--body);background:var(--linen);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block} a{color:inherit;text-decoration:none} button{cursor:pointer;font-family:var(--body)}
+
+    /* Loading */
+    .app-loading{display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:var(--head);font-size:1.1rem;color:var(--ink-soft)}
+
+    /* Nav */
+    nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--linen-mid)}
+    .nav-inner{max-width:var(--max);margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:0 var(--gap)}
+    .nav-logo{font-family:var(--head);font-size:1.2rem;font-weight:600;letter-spacing:-.01em;line-height:1.15;flex-shrink:0}
+    .nav-logo span{display:block;font-family:var(--body);font-size:.68rem;font-weight:500;color:var(--rose);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+    .nav-links{display:flex;gap:1.75rem;list-style:none;align-items:center}
+    .nav-links a{font-size:.88rem;font-weight:500;color:var(--ink-soft);transition:color .2s}
+    .nav-links a:hover{color:var(--rose)}
+    .nav-cta{background:var(--rose)!important;color:var(--white)!important;padding:.4rem 1rem;border-radius:999px;font-size:.82rem;font-weight:600;transition:background .2s!important}
+    .nav-cta:hover{background:var(--ink)!important}
+    .nav-admin{color:var(--sage)!important;font-size:.82rem!important}
+    .nav-hamburger{display:none;background:none;border:none;padding:.4rem;color:var(--ink);font-size:1.4rem;line-height:1}
+    .mob-menu{display:none;flex-direction:column;background:var(--white);border-top:1px solid var(--linen-mid);padding:.75rem var(--gap) 1rem}
+    .mob-menu.open{display:flex}
+    .mob-menu a{padding:.55rem 0;font-size:.95rem;font-weight:500;color:var(--ink-soft);border-bottom:1px solid var(--linen-mid)}
+    .mob-menu a:last-child{border-bottom:none}
+    .mob-cta{color:var(--rose)!important;font-weight:600!important}
+
+    /* Hero */
+    .hero{background:var(--ink);color:var(--white);padding:clamp(4rem,10vw,8rem) var(--gap) clamp(3rem,7vw,5.5rem);overflow:hidden;position:relative}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 90% 50%,rgba(196,132,143,.18) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 10% 80%,rgba(122,158,138,.12) 0%,transparent 55%);pointer-events:none}
+    .hero-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center;position:relative}
+    .hero-text{animation:hfi 1s ease both}
+    @keyframes hfi{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .hero-eyebrow{display:inline-block;font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:1.1rem}
+    .hero h1{font-family:var(--head);font-size:clamp(2rem,4.5vw,3.4rem);font-weight:500;line-height:1.15;letter-spacing:-.02em;margin-bottom:1.4rem;max-width:18ch}
+    .hero h1 em{font-style:italic;color:var(--rose-light)}
+    .hero-desc{font-size:1rem;color:rgba(248,243,238,.72);max-width:46ch;margin-bottom:1.75rem;line-height:1.75}
+    .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn-primary{background:var(--rose);color:var(--white);padding:.65rem 1.5rem;border-radius:999px;font-size:.92rem;font-weight:600;border:none;transition:background .2s,transform .15s;display:inline-block;cursor:pointer}
+    .btn-primary:hover{background:var(--ink-soft);transform:translateY(-1px)}
+    .btn-ghost{border:1px solid rgba(248,243,238,.32);color:rgba(248,243,238,.82);padding:.65rem 1.5rem;border-radius:999px;font-size:.92rem;font-weight:500;background:none;display:inline-block;transition:border-color .2s,color .2s}
+    .btn-ghost:hover{border-color:var(--rose-light);color:var(--white)}
+    .hero-quote{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.11);border-radius:12px;padding:1.85rem 2rem;animation:hfi 1.2s .25s ease both}
+    .hero-quote blockquote{font-family:var(--head);font-style:italic;font-size:clamp(1rem,1.8vw,1.25rem);line-height:1.55;color:var(--linen);margin-bottom:1.1rem}
+    .hero-quote blockquote::before{content:'\201C';font-size:2.4em;line-height:.1;vertical-align:-.4em;color:var(--rose);margin-right:.08em}
+    .quote-attr{display:flex;align-items:center;gap:.7rem}
+    .quote-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--rose) 0%,var(--sage) 100%);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-size:.95rem;color:var(--white)}
+    .quote-name{font-size:.83rem;font-weight:600;color:var(--rose-light)}
+    .quote-role{font-size:.75rem;color:rgba(248,243,238,.5)}
+
+    /* Sections */
+    .section{padding:clamp(2.5rem,6vw,5rem) var(--gap)}
+    .section-inner{max-width:var(--max);margin:0 auto}
+    .section-header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:clamp(1.25rem,3vw,2rem)}
+    .section-title{font-family:var(--head);font-size:clamp(1.4rem,2.5vw,1.85rem);font-weight:500;letter-spacing:-.02em}
+    .toggle-link{font-size:.86rem;font-weight:600;color:var(--rose);background:none;border:none;border-bottom:1px solid var(--rose-light);padding-bottom:1px;transition:color .2s;cursor:pointer}
+    .toggle-link:hover{color:var(--ink)}
+
+    /* Featured */
+    .featured-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:2px;border-radius:14px;overflow:hidden;background:var(--linen-mid);cursor:pointer}
+    .feat-img{min-height:400px;position:relative;display:flex;align-items:flex-end;padding:1.75rem;background-size:cover;background-position:center}
+    .feat-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(46,27,46,.88) 0%,transparent 55%)}
+    .cat-tag{position:absolute;top:1.25rem;left:1.25rem;background:var(--sage);color:var(--white);font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px;z-index:1}
+    .feat-txt{position:relative;z-index:1}
+    .feat-txt h2{font-family:var(--head);font-size:clamp(1.25rem,2.2vw,1.75rem);font-weight:500;color:var(--white);line-height:1.25;margin-bottom:.5rem;letter-spacing:-.02em}
+    .post-meta{display:flex;align-items:center;gap:.65rem;font-size:.78rem;color:rgba(248,243,238,.6)}
+    .dot{color:var(--rose)}
+    .feat-body{background:var(--white);padding:2.25rem 1.75rem;display:flex;flex-direction:column;justify-content:space-between}
+    .feat-exc{font-size:.97rem;color:var(--ink-soft);line-height:1.78;margin-bottom:1.4rem;flex-grow:1}
+    .read-more{font-size:.88rem;font-weight:600;color:var(--rose);display:inline-flex;align-items:center;gap:.4rem;transition:gap .2s;border:none;background:none;cursor:pointer}
+    .read-more:hover{gap:.7rem}
+
+    /* Grid */
+    .post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+    .post-card{background:var(--white);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer}
+    .post-card:hover,.featured-grid:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(46,27,46,.1)}
+    .card-thumb{height:170px;display:flex;align-items:flex-end;padding:.9rem;background-size:cover;background-position:center}
+    .card-tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.22);color:var(--white);font-size:.68rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:.22rem .6rem;border-radius:999px}
+    .card-body{padding:1.15rem 1.3rem 1.4rem;flex-grow:1;display:flex;flex-direction:column}
+    .card-body h3{font-family:var(--head);font-size:1rem;font-weight:500;line-height:1.35;letter-spacing:-.01em;color:var(--ink);margin-bottom:.5rem}
+    .card-body p{font-size:.86rem;color:var(--ink-soft);line-height:1.65;flex-grow:1;margin-bottom:.9rem}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.7rem;border-top:1px solid var(--linen-mid)}
+    .card-author{display:flex;align-items:center;gap:.45rem}
+    .a-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;color:var(--white);flex-shrink:0}
+    .a-name{font-size:.76rem;font-weight:600;color:var(--ink-soft)}
+    .c-date{font-size:.73rem;color:var(--rose)}
+    .toggle-btn-wrap{text-align:center;margin-top:1.5rem}
+    .toggle-btn{background:none;border:1.5px solid var(--rose);color:var(--rose);padding:.55rem 1.6rem;border-radius:999px;font-size:.9rem;font-weight:600;transition:background .2s,color .2s}
+    .toggle-btn:hover{background:var(--rose);color:var(--white)}
+
+    /* Color themes */
+    .c1{background:linear-gradient(135deg,#5A2845 0%,#3D1C3D 100%)}
+    .c2{background:linear-gradient(135deg,#1E3D32 0%,#2A4A3A 100%)}
+    .c3{background:linear-gradient(135deg,#3D2535 0%,#5A3E4A 100%)}
+    .c4{background:linear-gradient(135deg,#2A3A28 0%,#1E3028 100%)}
+    .c5{background:linear-gradient(135deg,#4A2840 0%,#6A3A50 100%)}
+    .c6{background:linear-gradient(135deg,#3A2A1E 0%,#5A4030 100%)}
+
+    /* Story detail */
+    .story-hero{padding:clamp(3.5rem,8vw,6.5rem) var(--gap) clamp(2.5rem,5vw,4rem);position:relative;display:flex;align-items:flex-end;min-height:380px;background-size:cover;background-position:center}
+    .story-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(46,27,46,.92) 0%,rgba(46,27,46,.5) 100%)}
+    .story-hero-inner{max-width:var(--max);margin:0 auto;width:100%;position:relative;z-index:1}
+    .back-btn{display:inline-flex;align-items:center;gap:.4rem;font-size:.86rem;font-weight:600;color:rgba(248,243,238,.72);margin-bottom:1.25rem;background:none;border:none;transition:color .2s}
+    .back-btn:hover{color:var(--rose)}
+    .story-title{font-family:var(--head);font-size:clamp(1.8rem,4vw,3rem);font-weight:500;line-height:1.18;letter-spacing:-.02em;color:var(--white);margin-bottom:1.25rem;max-width:26ch}
+    .story-byline{display:flex;align-items:center;gap:.8rem}
+    .story-body-wrap{padding:clamp(2.5rem,5vw,4.5rem) var(--gap)}
+    .story-body{max-width:680px;margin:0 auto}
+    .story-lead{font-family:var(--head);font-style:italic;font-size:1.15rem;color:var(--ink-soft);line-height:1.7;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--linen-mid)}
+    .story-body p{margin-bottom:1.5rem;font-size:1.05rem;line-height:1.82;color:var(--ink);max-width:70ch}
+
+    /* Empty state */
+    .empty-state{text-align:center;padding:4rem 1rem}
+    .empty-state .ei{font-size:3rem;margin-bottom:1rem}
+    .empty-state h3{font-family:var(--head);font-size:1.5rem;margin-bottom:.5rem}
+    .empty-state p{color:var(--ink-soft);margin-bottom:1.5rem}
+
+    /* Voices */
+    .voices{background:var(--ink);color:var(--white);padding:clamp(3rem,6vw,5rem) var(--gap)}
+    .voices-inner{max-width:var(--max);margin:0 auto}
+    .voices-hd{text-align:center;margin-bottom:clamp(2rem,4vw,3rem)}
+    .voices-hd .lbl{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);margin-bottom:.7rem}
+    .voices-hd h2{font-family:var(--head);font-size:clamp(1.5rem,2.8vw,2rem);font-weight:500;line-height:1.2;letter-spacing:-.02em;max-width:28ch;margin:0 auto}
+    .voices-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+    .voice-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:1.6rem}
+    .voice-card blockquote{font-family:var(--head);font-style:italic;font-size:.97rem;line-height:1.62;color:rgba(248,243,238,.82);margin-bottom:1.15rem}
+    .v-attr{display:flex;align-items:center;gap:.6rem}
+    .v-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:600;color:var(--ink)}
+    .vd1{background:var(--rose-light)}.vd2{background:var(--sage-light)}.vd3{background:var(--linen-mid)}
+    .v-name{font-size:.82rem;font-weight:600;color:var(--rose-light)}
+    .v-det{font-size:.73rem;color:rgba(248,243,238,.42)}
+
+    /* About */
+    .about{background:var(--linen-mid);padding:clamp(3rem,6vw,5rem) var(--gap)}
+    .about-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+    .about-text h2{font-family:var(--head);font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:500;letter-spacing:-.02em;line-height:1.2;margin-bottom:1.15rem}
+    .about-text p{font-size:.98rem;color:var(--ink-soft);line-height:1.8;margin-bottom:1.1rem;max-width:52ch}
+    .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+    .stat-box{background:var(--white);border-radius:10px;padding:1.3rem 1.2rem}
+    .stat-n{font-family:var(--head);font-size:2rem;font-weight:600;line-height:1;letter-spacing:-.03em;margin-bottom:.25rem}
+    .stat-n span{color:var(--rose)}
+    .stat-l{font-size:.8rem;color:var(--ink-soft);line-height:1.3}
+
+    /* Footer */
+    footer{background:var(--ink);color:rgba(248,243,238,.68);padding:clamp(2.5rem,5vw,4rem) var(--gap) 2rem}
+    .footer-inner{max-width:var(--max);margin:0 auto}
+    .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+    .f-logo{font-family:var(--head);font-size:1.2rem;font-weight:600;color:var(--white);margin-bottom:.45rem}
+    .f-tag{font-size:.83rem;color:rgba(248,243,238,.5);line-height:1.65;max-width:30ch;margin-bottom:1.1rem}
+    .f-social{display:flex;gap:.6rem}
+    .soc-a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:rgba(255,255,255,.65);transition:border-color .2s,color .2s}
+    .soc-a:hover{border-color:var(--rose);color:var(--rose)}
+    .footer-col h4{font-size:.77rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--white);margin-bottom:.9rem}
+    .footer-col ul{list-style:none}
+    .footer-col li{margin-bottom:.5rem}
+    .footer-col a{font-size:.85rem;color:rgba(248,243,238,.55);transition:color .2s}
+    .footer-col a:hover{color:var(--rose)}
+    .footer-btm{border-top:1px solid rgba(255,255,255,.09);padding-top:1.4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .footer-btm p{font-size:.78rem;color:rgba(248,243,238,.38)}
+    .crisis{font-size:.78rem;color:var(--rose);font-weight:500}
+
+    /* Admin */
+    .admin-wrap{max-width:860px;margin:0 auto;padding:2.5rem var(--gap) 4rem}
+    .admin-hd{margin-bottom:1.75rem}
+    .admin-hd h1{font-family:var(--head);font-size:1.9rem;font-weight:500;letter-spacing:-.02em;margin-bottom:.3rem}
+    .admin-hd p{color:var(--ink-soft);font-size:.93rem}
+    .admin-tabs{display:flex;gap:.5rem;margin-bottom:2rem;border-bottom:2px solid var(--linen-mid)}
+    .a-tab{background:none;border:none;padding:.7rem 1.2rem;font-size:.9rem;font-weight:600;color:var(--ink-soft);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s,border-color .2s}
+    .a-tab.active,.a-tab:hover{color:var(--rose);border-bottom-color:var(--rose)}
+    .admin-sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+    .admin-sec h2{font-family:var(--head);font-size:1.25rem;font-weight:500}
+    .story-list{display:flex;flex-direction:column;gap:.75rem}
+    .story-row{display:flex;align-items:center;gap:1rem;background:var(--white);border-radius:10px;padding:.9rem 1.1rem}
+    .story-thumb{width:52px;height:52px;border-radius:6px;flex-shrink:0;background-size:cover;background-position:center}
+    .story-info{flex-grow:1;min-width:0}
+    .story-info strong{display:block;font-size:.93rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.2rem}
+    .story-info span{font-size:.78rem;color:var(--ink-soft)}
+    .feat-badge{background:var(--sage-light);color:var(--sage);font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;border-radius:4px;margin-left:.5rem}
+    .story-acts{display:flex;gap:.5rem;flex-shrink:0}
+    .btn-edit{background:var(--linen-mid);color:var(--ink);border:none;padding:.4rem .85rem;border-radius:6px;font-size:.82rem;font-weight:600;transition:background .2s}
+    .btn-edit:hover{background:var(--sage-light)}
+    .btn-del{background:none;color:var(--rose);border:1px solid var(--rose-light);padding:.4rem .85rem;border-radius:6px;font-size:.82rem;font-weight:600;transition:background .2s,color .2s}
+    .btn-del:hover{background:var(--rose);color:var(--white)}
+    .export-bar{display:flex;align-items:center;gap:1rem;background:var(--ink);color:var(--white);border-radius:10px;padding:1.1rem 1.4rem;margin-bottom:1.75rem}
+    .export-bar p{font-size:.9rem;flex-grow:1;line-height:1.5}
+    .export-bar p strong{display:block;margin-bottom:.15rem}
+    .export-bar p span{opacity:.65;font-size:.82rem}
+    .btn-export{background:var(--sage);color:var(--white);border:none;padding:.6rem 1.3rem;border-radius:999px;font-size:.88rem;font-weight:600;transition:background .2s;white-space:nowrap;flex-shrink:0}
+    .btn-export:hover{background:#5a8070}
+
+    /* Form overlay */
+    .form-overlay{position:fixed;inset:0;background:rgba(46,27,46,.6);z-index:500;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:2rem 1rem}
+    .form-panel{background:var(--white);border-radius:14px;width:100%;max-width:720px;overflow:hidden;box-shadow:0 20px 60px rgba(46,27,46,.25)}
+    .form-hd{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.75rem;border-bottom:1px solid var(--linen-mid)}
+    .form-hd h2{font-family:var(--head);font-size:1.2rem;font-weight:500}
+    .form-x{background:none;border:none;font-size:1.2rem;color:var(--ink-soft);padding:.3rem;line-height:1}
+    .form-x:hover{color:var(--rose)}
+    .form-body{padding:1.5rem 1.75rem 2rem;display:flex;flex-direction:column;gap:.1rem}
+    .fg{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.9rem}
+    .fg label{font-size:.78rem;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+    .fg input,.fg select,.fg textarea{padding:.62rem .9rem;border:1.5px solid var(--linen-mid);border-radius:8px;font-family:var(--body);font-size:.93rem;background:var(--linen);color:var(--ink);outline:none;transition:border-color .2s;width:100%}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--rose)}
+    .fg textarea{resize:vertical;min-height:80px}
+    .fg small{font-size:.73rem;color:var(--ink-soft)}
+    .frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .frow .fg{margin-bottom:0}
+    .cb-lbl{display:flex;align-items:center;gap:.5rem;font-size:.88rem;font-weight:500;cursor:pointer}
+    .cb-lbl input{width:16px;height:16px;accent-color:var(--rose)}
+    .form-acts{display:flex;gap:.75rem;justify-content:flex-end;padding-top:1rem;border-top:1px solid var(--linen-mid);margin-top:.5rem}
+    .btn-cancel{background:none;border:1.5px solid var(--linen-mid);color:var(--ink-soft);padding:.62rem 1.4rem;border-radius:999px;font-size:.9rem;font-weight:600;transition:border-color .2s}
+    .btn-cancel:hover{border-color:var(--rose);color:var(--rose)}
+    .img-hint{font-size:.78rem;color:var(--ink-soft);margin-top:.3rem}
+
+    /* Admin login */
+    .login-wrap{max-width:400px;margin:5rem auto;padding:0 2rem;text-align:center}
+    .login-wrap h2{font-family:var(--head);font-size:1.75rem;font-weight:500;margin-bottom:.5rem}
+    .login-wrap p{color:var(--ink-soft);font-size:.93rem;margin-bottom:2rem}
+    .login-form{display:flex;flex-direction:column;gap:1rem}
+    .login-form input{padding:.7rem 1rem;border:1.5px solid var(--linen-mid);border-radius:8px;font-family:var(--body);font-size:1rem;background:var(--linen);color:var(--ink);outline:none;transition:border-color .2s;text-align:center;letter-spacing:.1em}
+    .login-form input:focus{border-color:var(--rose)}
+    .login-err{color:var(--rose);font-size:.85rem;min-height:1.2em}
+    .admin-settings-form{background:var(--white);border-radius:12px;padding:1.75rem}
+
+    /* Related */
+    .related-section{background:var(--linen-mid);padding:clamp(2.5rem,5vw,4rem) var(--gap)}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .hero-inner{grid-template-columns:1fr}
+      .featured-grid{grid-template-columns:1fr}
+      .feat-img{min-height:260px}
+      .post-grid{grid-template-columns:1fr 1fr}
+      .voices-grid{grid-template-columns:1fr}
+      .about-inner{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr 1fr}
+      .frow{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .nav-links{display:none}
+      .nav-hamburger{display:block}
+      .post-grid{grid-template-columns:1fr}
+      .footer-top{grid-template-columns:1fr}
+      .about-stats{grid-template-columns:1fr 1fr}
+    }
+    @media(prefers-reduced-motion:reduce){.hero-text,.hero-quote{animation:none}}
+  </style>
+</head>
+<body>
+<div id="app"><div class="app-loading">Loading Survivors Vault…</div></div>
+<div id="modal"></div>
+
+<script>
+/* ═══════════════════════════════════════
+   SURVIVORS VAULT — standalone SPA
+   No accounts. No cloud. Yours entirely.
+   ═══════════════════════════════════════ */
+
+// Snapshot the original HTML BEFORE any rendering (used for export)
+const _SNAP = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+// ── Load embedded data ──────────────────
+let cfg  = JSON.parse(document.getElementById('sv-config').textContent);
+let data = JSON.parse(document.getElementById('sv-stories').textContent);
+
+// Merge with localStorage (localStorage = most recent admin edits)
+try {
+  const ls = JSON.parse(localStorage.getItem('sv_stories') || 'null');
+  const lc = JSON.parse(localStorage.getItem('sv_cfg') || 'null');
+  if (Array.isArray(ls)) data = ls;
+  if (lc) cfg = { ...cfg, ...lc };
+} catch(e) {}
+
+let adminIn  = sessionStorage.getItem('sv_adm') === '1';
+let loginAttempts = parseInt(sessionStorage.getItem('sv_att') || '0');
+let showAll = false;
+
+// ── Persist ──────────────────────────────
+function persist() {
+  try {
+    localStorage.setItem('sv_stories', JSON.stringify(data));
+    localStorage.setItem('sv_cfg', JSON.stringify(cfg));
+  } catch(e) {}
+}
+
+// ── Export site ──────────────────────────
+function exportSite() {
+  let html = _SNAP;
+  const cfgBlock  = `<script type="application/json" id="sv-config">\n${JSON.stringify(cfg, null, 2)}\n<\/script>`;
+  const dataBlock = `<script type="application/json" id="sv-stories">\n${JSON.stringify(data, null, 2)}\n<\/script>`;
+  html = html.replace(/<script type="application\/json" id="sv-config">[\s\S]*?<\/script>/, cfgBlock);
+  html = html.replace(/<script type="application\/json" id="sv-stories">[\s\S]*?<\/script>/, dataBlock);
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'survivors-vault.html';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+// ── Utils ────────────────────────────────
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const cc  = i => 'c' + ((((i||1)-1)%6)+1);
+const ac  = c => ({rose:'#C4848F',sage:'#7A9E8A',ink:'#5A4060'}[c]||'#C4848F');
+const bg  = (url, fallback) => url ? `background-image:url(${esc(url)});background-size:cover;background-position:center` : '';
+function fmtBody(t) {
+  return (t||'').split(/\n\n+/).filter(Boolean)
+    .map(p=>`<p>${esc(p).replace(/\n/g,'<br>')}</p>`).join('');
+}
+
+// ── Router ───────────────────────────────
+function route() {
+  const h = location.hash;
+  if (h.startsWith('#/story/')) renderStory(h.slice(8));
+  else if (h === '#/admin')    renderAdmin();
+  else                          renderHome();
+}
+window.addEventListener('hashchange', route);
+
+// ── Nav ──────────────────────────────────
+function navHTML() {
+  const ig = cfg.instagramUrl || '#';
+  return `<nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" onclick="go('#');return false">Survivors Vault<span>by Survivors Project</span></a>
+      <ul class="nav-links">
+        <li><a href="#stories">Stories</a></li>
+        <li><a href="#voices">Voices</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="${esc(ig)}" target="_blank" rel="noopener" class="nav-cta">Support Us</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    </div>
+    <div class="mob-menu" id="mob">
+      <a href="#stories" onclick="closeMob()">Stories</a>
+      <a href="#voices" onclick="closeMob()">Voices</a>
+      <a href="#resources" onclick="closeMob()">Resources</a>
+      <a href="#about" onclick="closeMob()">About</a>
+      <a href="${esc(ig)}" target="_blank" rel="noopener" class="mob-cta" onclick="closeMob()">Support Us</a>
+    </div>
+  </nav>`;
+}
+function toggleMenu(){ document.getElementById('mob')?.classList.toggle('open'); }
+function closeMob()  { document.getElementById('mob')?.classList.remove('open'); }
+function go(h)       { location.hash = h; scrollTo(0,0); }
+
+// ── Hero ─────────────────────────────────
+function heroHTML() {
+  const q  = cfg.heroQuote || '';
+  const qn = cfg.heroQuoteAuthor || 'Anonymous';
+  const qr = cfg.heroQuoteRole   || '';
+  return `<section class="hero"><div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">A space to be heard</p>
+      <h1>Stories that <em>hold</em> and stories that <em>heal</em></h1>
+      <p class="hero-desc">Survivors Vault is a living archive of courage — where people who have walked through darkness share what they've learned, and where no story is too small to matter.</p>
+      <div class="hero-actions">
+        <a href="#stories" class="btn-primary">Read Stories</a>
+        <a href="#about" class="btn-ghost">Our Mission</a>
+      </div>
+    </div>
+    <div class="hero-quote">
+      <blockquote>${esc(q)}</blockquote>
+      <div class="quote-attr">
+        <div class="quote-avatar">${esc(qn.charAt(0))}</div>
+        <div><p class="quote-name">${esc(qn)}</p><p class="quote-role">${esc(qr)}</p></div>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+// ── Featured story ────────────────────────
+function featuredHTML(s) {
+  const bgStyle = s.imageUrl ? `background-image:url(${esc(s.imageUrl)});background-size:cover;background-position:center` : '';
+  return `<section class="section" id="stories"><div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">This week's featured story</h2>
+      <button class="toggle-link" onclick="toggleAll()">${showAll?'Show less ↑':'Show all stories ↓'}</button>
+    </div>
+    <div class="featured-grid sl" data-id="${esc(s.id)}" tabindex="0" role="article">
+      <div class="feat-img ${s.imageUrl?'':cc(s.colorIndex)}" style="${bgStyle}">
+        <div class="feat-overlay"></div>
+        <span class="cat-tag">${esc(s.category)}</span>
+        <div class="feat-txt">
+          <h2>${esc(s.title)}</h2>
+          <div class="post-meta">
+            <span>${esc(s.author)}</span><span class="dot">·</span>
+            <span>${esc(s.dateDisplay)}</span><span class="dot">·</span>
+            <span>${esc(s.readTime)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="feat-body">
+        <p class="feat-exc">${esc(s.excerpt)}</p>
+        <span class="read-more">Read ${esc(s.author.split(' ')[0])}'s story <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+// ── Stories grid ─────────────────────────
+function gridHTML(list) {
+  if (!list.length) return '';
+  const cards = list.map(s => {
+    const bgStyle = s.imageUrl ? `background-image:url(${esc(s.imageUrl)});background-size:cover;background-position:center` : '';
+    return `<article class="post-card sl" data-id="${esc(s.id)}" tabindex="0">
+      <div class="card-thumb ${s.imageUrl?'':cc(s.colorIndex)}" style="${bgStyle}"><span class="card-tag">${esc(s.category)}</span></div>
+      <div class="card-body">
+        <h3>${esc(s.title)}</h3>
+        <p>${esc((s.excerpt||'').substring(0,115))}…</p>
+        <div class="card-footer">
+          <div class="card-author">
+            <div class="a-dot" style="background:${ac(s.authorColor)}">${esc(s.authorInitial)}</div>
+            <span class="a-name">${esc(s.author)}</span>
+          </div>
+          <span class="c-date">${esc(s.dateDisplay)}</span>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+  return `<section class="section" style="padding-top:0" id="all-stories"><div class="section-inner">
+    <div class="post-grid">${cards}</div>
+    <div class="toggle-btn-wrap"><button class="toggle-btn" onclick="toggleAll()">↑ Show less</button></div>
+  </div></section>`;
+}
+
+function toggleAll() {
+  showAll = !showAll;
+  renderHome();
+  if (showAll) setTimeout(()=>document.getElementById('all-stories')?.scrollIntoView({behavior:'smooth'}),60);
+}
+
+// ── Home ─────────────────────────────────
+function renderHome() {
+  const feat = data.find(s=>s.featured) || data[0];
+  const rest = data.filter(s=>s.id!==feat?.id);
+  const empty = !data.length ? `<section class="section" id="stories"><div class="section-inner"><div class="empty-state">
+    <p class="ei">📖</p><h3>No stories yet</h3>
+    <p>The Vault is ready for its first story.</p>
+    <a href="#/admin" class="btn-primary" style="display:inline-block">Add first story</a>
+  </div></div></section>` : '';
+  document.getElementById('app').innerHTML =
+    navHTML()+heroHTML()+(feat?featuredHTML(feat):empty)+(feat&&showAll?gridHTML(rest):'')+voicesHTML()+aboutHTML()+footerHTML();
+  bindLinks();
+}
+
+function bindLinks() {
+  document.querySelectorAll('.sl').forEach(el=>{
+    const id=el.dataset.id;
+    const fn=()=>{location.hash='#/story/'+id;scrollTo(0,0);};
+    el.addEventListener('click',fn);
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')fn();});
+  });
+}
+
+// ── Story detail ─────────────────────────
+function renderStory(id) {
+  const s = data.find(x=>x.id===id);
+  if (!s) {
+    document.getElementById('app').innerHTML = navHTML()+`<div style="max-width:640px;margin:5rem auto;padding:0 2rem;text-align:center">
+      <h2 style="font-family:'Lora',serif;font-size:1.7rem;margin-bottom:.75rem">Story not found</h2>
+      <p style="color:var(--ink-soft);margin-bottom:1.75rem">This story may have been moved.</p>
+      <a href="#" class="btn-primary">Back to home</a></div>`+footerHTML();
+    return;
+  }
+  const bgStyle = s.imageUrl
+    ? `background-image:linear-gradient(to bottom,rgba(46,27,46,.65),rgba(46,27,46,.92)),url(${esc(s.imageUrl)});background-size:cover;background-position:center`
+    : '';
+  const related = data.filter(x=>x.id!==id&&x.category===s.category).slice(0,3);
+  document.getElementById('app').innerHTML = navHTML()+`
+  <article>
+    <div class="story-hero ${s.imageUrl?'':cc(s.colorIndex)+' '}" style="${bgStyle}">
+      ${!s.imageUrl?'<div class="story-hero-overlay"></div>':''}
+      <div class="story-hero-inner">
+        <button class="back-btn" onclick="history.back()">← Back</button>
+        <span class="cat-tag" style="position:static;margin-bottom:1rem;display:inline-block">${esc(s.category)}</span>
+        <h1 class="story-title">${esc(s.title)}</h1>
+        <div class="story-byline">
+          <div class="quote-avatar" style="background:${ac(s.authorColor)}">${esc(s.authorInitial)}</div>
+          <div><p class="quote-name">${esc(s.author)}</p><p class="quote-role">${esc(s.dateDisplay)} · ${esc(s.readTime)}</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="story-body-wrap"><div class="story-body">
+      <p class="story-lead">${esc(s.excerpt)}</p>
+      ${fmtBody(s.content)}
+    </div></div>
+  </article>
+  ${related.length?relatedHTML(related):''}
+  ${footerHTML()}`;
+  bindLinks(); scrollTo(0,0);
+}
+
+function relatedHTML(list) {
+  const cards = list.map(s=>`<article class="post-card sl" data-id="${esc(s.id)}" tabindex="0">
+    <div class="card-thumb ${s.imageUrl?'':cc(s.colorIndex)}" ${s.imageUrl?`style="background-image:url(${esc(s.imageUrl)});background-size:cover;background-position:center"`:''}><span class="card-tag">${esc(s.category)}</span></div>
+    <div class="card-body"><h3>${esc(s.title)}</h3><p>${esc((s.excerpt||'').substring(0,100))}…</p>
+      <div class="card-footer"><div class="card-author"><div class="a-dot" style="background:${ac(s.authorColor)}">${esc(s.authorInitial)}</div><span class="a-name">${esc(s.author)}</span></div><span class="c-date">${esc(s.dateDisplay)}</span></div>
+    </div></article>`).join('');
+  return `<section class="related-section"><div class="section-inner">
+    <h2 class="section-title" style="margin-bottom:1.5rem">More in ${esc(list[0].category)}</h2>
+    <div class="post-grid">${cards}</div>
+  </div></section>`;
+}
+
+// ── Static sections ───────────────────────
+function voicesHTML() {
+  return `<section class="voices" id="voices"><div class="voices-inner">
+    <div class="voices-hd"><p class="lbl">Community voices</p><h2>Words that found us along the way</h2></div>
+    <div class="voices-grid">
+      <div class="voice-card"><blockquote>Reading here for the first time, I felt less alone than I had in three years. Someone had put words to what I couldn't say.</blockquote>
+        <div class="v-attr"><div class="v-dot vd1">N</div><div><p class="v-name">Nisha, reader</p><p class="v-det">Chennai · shared anonymously</p></div></div></div>
+      <div class="voice-card"><blockquote>Survivors Project gave me a reason to write again. I'd been carrying my story in silence for eight years. This Vault held it carefully.</blockquote>
+        <div class="v-attr"><div class="v-dot vd2">T</div><div><p class="v-name">Thomas K.</p><p class="v-det">Contributor · Kochi</p></div></div></div>
+      <div class="voice-card"><blockquote>I send this blog to every counsellor I know. It says what professional literature can't: this is what survival actually feels like.</blockquote>
+        <div class="v-attr"><div class="v-dot vd3">L</div><div><p class="v-name">Dr. Lakshmi P.</p><p class="v-det">Trauma counsellor · Bengaluru</p></div></div></div>
+    </div>
+  </div></section>`;
+}
+
+function aboutHTML() {
+  return `<section class="about" id="about"><div class="about-inner">
+    <div class="about-text">
+      <h2>Why we built the Vault</h2>
+      <p>Survivors Project began because too many people were navigating the aftermath of trauma in isolation — without language, without community, without anyone who had walked the same ground.</p>
+      <p>The Vault is our living archive: a place where survivor stories, professional insights, and practical resources are held together — not to perform resilience, but to make the path less lonely for whoever walks it next.</p>
+      <a href="#" class="btn-primary" style="display:inline-block;margin-top:.5rem">Learn about our work</a>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box"><p class="stat-n">2<span>,400+</span></p><p class="stat-l">Stories shared in the Vault</p></div>
+      <div class="stat-box"><p class="stat-n">38<span>k</span></p><p class="stat-l">Monthly readers worldwide</p></div>
+      <div class="stat-box"><p class="stat-n">14</p><p class="stat-l">Countries represented</p></div>
+      <div class="stat-box"><p class="stat-n">6<span>yrs</span></p><p class="stat-l">Holding space since 2020</p></div>
+    </div>
+  </div></section>`;
+}
+
+function footerHTML() {
+  const ig = cfg.instagramUrl || '#';
+  return `<footer><div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="f-logo">Survivors Vault</p>
+        <p class="f-tag">A publication by Survivors Project. Created for survivors, by survivors, in service of a world with less silence.</p>
+        <div class="f-social"><a href="${esc(ig)}" target="_blank" rel="noopener" class="soc-a" aria-label="Instagram">Ig</a></div>
+      </div>
+      <div class="footer-col"><h4>Read</h4><ul>
+        <li><a href="#" onclick="showAll=false;renderHome()">Featured Story</a></li>
+        <li><a href="#" onclick="showAll=true;renderHome()">All Stories</a></li>
+        <li><a href="#voices">Voices</a></li><li><a href="#about">About</a></li>
+      </ul></div>
+      <div class="footer-col" id="resources"><h4>Support</h4><ul>
+        <li><a href="${esc(ig)}" target="_blank" rel="noopener">Follow on Instagram</a></li>
+        <li><a href="#about">Our Mission</a></li>
+        <li><a href="#about">Submit a Story</a></li>
+        <li><a href="#about">Crisis Lines</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-btm">
+      <p>© ${new Date().getFullYear()} Survivors Project. All rights reserved.</p>
+      <p class="crisis">In crisis? Call iCall: 9152987821</p>
+    </div>
+  </div></footer>`;
+}
+
+// ── Admin: login ──────────────────────────
+function renderAdmin() {
+  if (!adminIn) { renderLogin(); return; }
+  document.getElementById('app').innerHTML = navHTML()+`
+  <div class="admin-wrap">
+    <div class="admin-hd">
+      <h1>Admin Panel</h1>
+      <p>Add, edit and publish stories — no coding needed.</p>
+    </div>
+    <div class="export-bar">
+      <p><strong>Ready to go live?</strong><span>Export your site, then drag the downloaded file to Vercel (or your host) to publish changes.</span></p>
+      <button class="btn-export" onclick="exportSite()">⬇ Export Site</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="a-tab active" id="t-stories" onclick="switchTab('stories')">Stories (${data.length})</button>
+      <button class="a-tab" id="t-settings" onclick="switchTab('settings')">Site Settings</button>
+    </div>
+    <div id="pane-stories">${storiesPane()}</div>
+    <div id="pane-settings" hidden>${settingsPane()}</div>
+  </div>
+  <div id="modal"></div>
+  `+footerHTML();
+}
+
+function switchTab(t) {
+  document.getElementById('t-stories').classList.toggle('active',t==='stories');
+  document.getElementById('t-settings').classList.toggle('active',t==='settings');
+  document.getElementById('pane-stories').hidden  = (t!=='stories');
+  document.getElementById('pane-settings').hidden = (t!=='settings');
+}
+
+function renderLogin() {
+  const locked = loginAttempts >= 3;
+  document.getElementById('app').innerHTML = navHTML()+`
+  <div class="login-wrap">
+    <h2>Admin Login</h2>
+    ${locked
+      ? `<p style="color:var(--rose);font-weight:600">Too many failed attempts.<br>Close this tab and try again.</p>`
+      : `<p>Enter your admin password to continue.</p>
+         <div class="login-form">
+           <input type="password" id="pw-in" placeholder="Password" onkeydown="if(event.key==='Enter')tryLogin()"/>
+           <button class="btn-primary" onclick="tryLogin()">Sign in</button>
+           <p class="login-err" id="pw-err"></p>
+         </div>`
+    }
+  </div>`+footerHTML();
+  if (!locked) setTimeout(()=>document.getElementById('pw-in')?.focus(),100);
+}
+
+function tryLogin() {
+  const pw = document.getElementById('pw-in')?.value || '';
+  if (pw === cfg.adminPassword) {
+    adminIn = true;
+    loginAttempts = 0;
+    sessionStorage.setItem('sv_adm','1');
+    sessionStorage.setItem('sv_att','0');
+    renderAdmin();
+  } else {
+    loginAttempts++;
+    sessionStorage.setItem('sv_att', String(loginAttempts));
+    const remaining = 3 - loginAttempts;
+    if (remaining <= 0) {
+      renderLogin(); // show locked screen
+    } else {
+      const err = document.getElementById('pw-err');
+      if (err) err.textContent = `Incorrect password. ${remaining} attempt${remaining===1?'':'s'} remaining.`;
+    }
+  }
+}
+
+// ── Admin: stories pane ───────────────────
+function storiesPane() {
+  const rows = data.map(s=>`<div class="story-row">
+    <div class="story-thumb ${s.imageUrl?'':cc(s.colorIndex)}" ${s.imageUrl?`style="background-image:url(${esc(s.imageUrl)});background-size:cover;background-position:center"`:''}></div>
+    <div class="story-info">
+      <strong title="${esc(s.title)}">${esc(s.title)}</strong>
+      <span>${esc(s.category)} · ${esc(s.author)} · ${esc(s.dateDisplay)}${s.featured?' <span class="feat-badge">Featured</span>':''}</span>
+    </div>
+    <div class="story-acts">
+      <button class="btn-edit" onclick="openForm('${esc(s.id)}')">Edit</button>
+      <button class="btn-del" onclick="delStory('${esc(s.id)}')">Delete</button>
+    </div>
+  </div>`).join('')||'<p style="color:var(--ink-soft);padding:1.5rem 0">No stories yet — add the first one!</p>';
+  return `<div class="admin-sec">
+    <div class="admin-sec-hd"><h2>All Stories</h2><button class="btn-primary" onclick="openForm(null)">+ New Story</button></div>
+    <div class="story-list">${rows}</div>
+  </div>`;
+}
+
+// ── Admin: settings pane ──────────────────
+function settingsPane() {
+  return `<div class="admin-sec"><h2 style="margin-bottom:1.5rem">Site Settings</h2>
+  <div class="admin-settings-form">
+    <div class="fg"><label>Instagram URL (Support Us button)</label>
+      <input id="s-ig" type="url" value="${esc(cfg.instagramUrl||'')}" placeholder="https://instagram.com/handle"/></div>
+    <div class="fg"><label>Hero Quote</label>
+      <textarea id="s-q" rows="3">${esc(cfg.heroQuote||'')}</textarea></div>
+    <div class="frow">
+      <div class="fg"><label>Quote Author</label><input id="s-qa" value="${esc(cfg.heroQuoteAuthor||'')}"/></div>
+      <div class="fg"><label>Quote Caption</label><input id="s-qr" value="${esc(cfg.heroQuoteRole||'')}"/></div>
+    </div>
+    <div class="fg"><label>Admin Password</label>
+      <input id="s-pw" type="password" placeholder="New password (leave blank to keep current)"/></div>
+    <div style="display:flex;align-items:center;gap:1rem;margin-top:.5rem">
+      <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+      <span id="sv-ok" style="display:none;color:var(--sage);font-weight:600;font-size:.9rem">Saved ✓</span>
+    </div>
+  </div></div>`;
+}
+
+function saveSettings() {
+  cfg.instagramUrl     = document.getElementById('s-ig').value.trim();
+  cfg.heroQuote        = document.getElementById('s-q').value.trim();
+  cfg.heroQuoteAuthor  = document.getElementById('s-qa').value.trim();
+  cfg.heroQuoteRole    = document.getElementById('s-qr').value.trim();
+  const np = document.getElementById('s-pw').value;
+  if (np) cfg.adminPassword = np;
+  persist();
+  const ok = document.getElementById('sv-ok');
+  if (ok) { ok.style.display='inline'; setTimeout(()=>ok.style.display='none',2500); }
+}
+
+// ── Story form ────────────────────────────
+function openForm(id) {
+  const s = id ? data.find(x=>x.id===id) : null;
+  const catOpts   = ['Survivor Story','Mental Health','Community','Recovery','Resources','Relationships']
+    .map(c=>`<option value="${c}"${s?.category===c?' selected':''}>${c}</option>`).join('');
+  const colorOpts = [[1,'Deep Rose'],[2,'Forest'],[3,'Plum'],[4,'Dark Green'],[5,'Mauve'],[6,'Warm Brown']]
+    .map(([n,l])=>`<option value="${n}"${(s?.colorIndex||1)==n?' selected':''}>${l}</option>`).join('');
+
+  document.getElementById('modal').innerHTML = `<div class="form-overlay" id="fov" onclick="if(event.target===this)closeForm()">
+    <div class="form-panel">
+      <div class="form-hd"><h2>${s?'Edit Story':'Add New Story'}</h2><button class="form-x" onclick="closeForm()">✕</button></div>
+      <div class="form-body">
+        <div class="frow">
+          <div class="fg" style="grid-column:span 2"><label>Title *</label>
+            <input id="f-t" value="${esc(s?.title||'')}" required placeholder="Story headline"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Category</label><select id="f-c">${catOpts}</select></div>
+          <div class="fg"><label>Author Name *</label><input id="f-a" value="${esc(s?.author||'')}" placeholder="Full name"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Display Date</label><input id="f-d" value="${esc(s?.dateDisplay||new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}))}"/></div>
+          <div class="fg"><label>Read Time</label><input id="f-rt" value="${esc(s?.readTime||'5 min read')}"/></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Author Dot Colour</label>
+            <select id="f-ac"><option value="rose"${(s?.authorColor||'rose')==='rose'?' selected':''}>Rose</option>
+            <option value="sage"${s?.authorColor==='sage'?' selected':''}>Sage</option>
+            <option value="ink"${s?.authorColor==='ink'?' selected':''}>Ink</option></select></div>
+          <div class="fg" style="align-self:flex-end;padding-bottom:.5rem">
+            <label class="cb-lbl"><input type="checkbox" id="f-feat"${s?.featured?' checked':''}/> Mark as Featured</label></div>
+        </div>
+        <div class="fg"><label>Excerpt (shown in cards) *</label>
+          <textarea id="f-e" rows="2" placeholder="1–2 sentence summary…">${esc(s?.excerpt||'')}</textarea></div>
+        <div class="fg"><label>Full Story *</label>
+          <textarea id="f-b" rows="8" placeholder="Write the full story here. Leave a blank line between paragraphs.">${esc(s?.content||'')}</textarea>
+          <small>Tip: press Enter twice to start a new paragraph.</small></div>
+        <div class="frow">
+          <div class="fg"><label>Cover Image URL</label>
+            <input id="f-img" value="${esc(s?.imageUrl||'')}" placeholder="https://i.imgur.com/yourimage.jpg"/>
+            <p class="img-hint">Paste any image URL — Imgur, Google Photos, Cloudinary, etc.</p></div>
+          <div class="fg"><label>Card Colour (if no image)</label><select id="f-col">${colorOpts}</select></div>
+        </div>
+        <div class="form-acts">
+          <button class="btn-cancel" onclick="closeForm()">Cancel</button>
+          <button class="btn-primary" id="f-save" onclick="saveStory('${s?esc(s.id):''}')">Save Story</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function closeForm() { document.getElementById('modal').innerHTML = ''; }
+
+function saveStory(existId) {
+  const author = document.getElementById('f-a').value.trim();
+  const title  = document.getElementById('f-t').value.trim();
+  if (!title || !author) { alert('Title and author are required.'); return; }
+
+  const isFeat = document.getElementById('f-feat').checked;
+  const id = existId || ('s'+Date.now());
+
+  if (isFeat) data.forEach(s => { if (s.id !== id) s.featured = false; });
+
+  const story = {
+    id, title,
+    excerpt:      document.getElementById('f-e').value.trim(),
+    content:      document.getElementById('f-b').value.trim(),
+    author, authorInitial: author.charAt(0).toUpperCase(),
+    authorColor:  document.getElementById('f-ac').value,
+    category:     document.getElementById('f-c').value,
+    dateDisplay:  document.getElementById('f-d').value.trim(),
+    readTime:     document.getElementById('f-rt').value.trim(),
+    colorIndex:   parseInt(document.getElementById('f-col').value),
+    imageUrl:     document.getElementById('f-img').value.trim(),
+    featured:     isFeat,
+    createdAt:    existId ? (data.find(s=>s.id===existId)?.createdAt||Date.now()) : Date.now()
+  };
+
+  if (existId) { const i = data.findIndex(s=>s.id===existId); if(i>-1) data[i]=story; else data.push(story); }
+  else data.unshift(story);
+
+  persist();
+  closeForm();
+  renderAdmin();
+}
+
+function delStory(id) {
+  if (!confirm('Delete this story? This cannot be undone.')) return;
+  data = data.filter(s=>s.id!==id);
+  persist();
+  renderAdmin();
+}
+
+// ── Boot ─────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => { route(); });
+</script>
+</body>
+</html>
