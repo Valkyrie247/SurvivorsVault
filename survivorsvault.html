@@ -12,10 +12,10 @@
   <script type="application/json" id="sv-config">
   {
     "adminPassword": "admin",
-    "instagramUrl": "https://instagram.com/survivorsproject",
+    "instagramUrl": "https://instagram.com/thesurvivorsproject0",
     "heroQuote": "I didn't want to be defined by what happened to me. I wanted to be known for how I chose to live after it.",
-    "heroQuoteAuthor": "Meera A.",
-    "heroQuoteRole": "Contributor · Survivors Project, 2024"
+    "heroQuoteAuthor": "Anonymous",
+    "heroQuoteRole": "Contributor · Survivors Project, 2026"
   }
   </script>
   <script type="application/json" id="sv-stories">
@@ -348,7 +348,7 @@ function fmtBody(t) {
 function route() {
   const h = location.hash;
   if (h.startsWith('#/story/')) renderStory(h.slice(8));
-  else if (h === '#/admin')    renderAdmin();
+  else if (h === '#/admin')     renderAdmin();
   else                          renderHome();
 }
 window.addEventListener('hashchange', route);
@@ -545,12 +545,12 @@ function voicesHTML() {
   return `<section class="voices" id="voices"><div class="voices-inner">
     <div class="voices-hd"><p class="lbl">Community voices</p><h2>Words that found us along the way</h2></div>
     <div class="voices-grid">
-      <div class="voice-card"><blockquote>Reading here for the first time, I felt less alone than I had in three years. Someone had put words to what I couldn't say.</blockquote>
-        <div class="v-attr"><div class="v-dot vd1">N</div><div><p class="v-name">Nisha, reader</p><p class="v-det">Chennai · shared anonymously</p></div></div></div>
-      <div class="voice-card"><blockquote>Survivors Project gave me a reason to write again. I'd been carrying my story in silence for eight years. This Vault held it carefully.</blockquote>
-        <div class="v-attr"><div class="v-dot vd2">T</div><div><p class="v-name">Thomas K.</p><p class="v-det">Contributor · Kochi</p></div></div></div>
-      <div class="voice-card"><blockquote>I send this blog to every counsellor I know. It says what professional literature can't: this is what survival actually feels like.</blockquote>
-        <div class="v-attr"><div class="v-dot vd3">L</div><div><p class="v-name">Dr. Lakshmi P.</p><p class="v-det">Trauma counsellor · Bengaluru</p></div></div></div>
+      <div class="voice-card"><blockquote>quote goes here </blockquote>
+        <div class="v-attr"><div class="v-dot vd1">N</div><div><p class="v-name">name, reader</p><p class="v-det"> · shared anonymously</p></div></div></div>
+      <div class="voice-card"><blockquote> Survivors Project gave me a reason to write again.</blockquote>
+        <div class="v-attr"><div class="v-dot vd2">T</div><div><p class="v-name"></p><p class="v-det">Anonymous Contributor</p></div></div></div>
+      <div class="voice-card"><blockquote> quote goes here </blockquote>
+        <div class="v-attr"><div class="v-dot vd3">L</div><div><p class="v-name"> author name </p><p class="v-det">· Bengaluru</p></div></div></div>
     </div>
   </div></section>`;
 }
@@ -694,7 +694,7 @@ function settingsPane() {
   return `<div class="admin-sec"><h2 style="margin-bottom:1.5rem">Site Settings</h2>
   <div class="admin-settings-form">
     <div class="fg"><label>Instagram URL (Support Us button)</label>
-      <input id="s-ig" type="url" value="${esc(cfg.instagramUrl||'')}" placeholder="https://instagram.com/handle"/></div>
+      <input id="s-ig" type="url" value="${esc(cfg.instagramUrl||'')}" placeholder="https://instagram.com/thesurvivorsproject0"/></div>
     <div class="fg"><label>Hero Quote</label>
       <textarea id="s-q" rows="3">${esc(cfg.heroQuote||'')}</textarea></div>
     <div class="frow">
