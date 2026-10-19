@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Survivors Vault — Survivors Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink:        #2E1B2E;
+      --ink-soft:   #5A4060;
+      --rose:       #C4848F;
+      --rose-light: #E8C4C8;
+      --sage:       #7A9E8A;
+      --sage-light: #C2D9CE;
+      --linen:      #F8F3EE;
+      --linen-mid:  #EDE6DE;
+      --white:      #FDFAF7;
+
+      --body-font: 'Source Sans 3', sans-serif;
+      --head-font: 'Lora', Georgia, serif;
+
+      --max-w: 1160px;
+      --gap: clamp(1.5rem, 4vw, 3rem);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink:        #F0E8F0;
+        --ink-soft:   #C0A8C8;
+        --rose:       #D4909A;
+        --rose-light: #6A3840;
+        --sage:       #7A9E8A;
+        --sage-light: #2A4A3A;
+        --linen:      #1E1420;
+        --linen-mid:  #2A1E2E;
+        --white:      #17101A;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body-font);
+      background: var(--linen);
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--linen-mid);
+      padding: 0 var(--gap);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      font-family: var(--head-font);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-family: var(--body-font);
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--rose);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--rose); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      color: var(--white);
+      padding: clamp(4rem, 10vw, 8rem) var(--gap) clamp(3rem, 8vw, 6rem);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 90% 50%, rgba(196,132,143,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(122,158,138,.12) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 6vw, 5rem);
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-family: var(--head-font);
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      max-width: 18ch;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--rose-light);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: rgba(248,243,238,.75);
+      max-width: 46ch;
+      margin-bottom: 2rem;
+      line-height: 1.75;
+    }
+
+    .btn-primary {
+      background: var(--rose);
+      color: var(--white);
+      padding: 0.7rem 1.6rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background .2s, transform .15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--rose-light); color: var(--ink); transform: translateY(-1px); }
+
+    .hero-quote {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+    }
+
+    .hero-quote blockquote {
+      font-family: var(--head-font);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      line-height: 1.55;
+      color: var(--linen);
+      margin-bottom: 1.25rem;
+    }
+
+    .quote-attr { display: flex; align-items: center; gap: .75rem; }
+    .quote-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--sage) 100%);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--head-font);
+      font-size: 1rem;
+      color: var(--white);
+    }
+
+    .quote-name { font-size: 0.85rem; font-weight: 600; color: var(--rose-light); }
+    .quote-role { font-size: 0.78rem; color: rgba(248,243,238,.55); }
+
+    /* ── SECTION WRAPPER ── */
+    .section { padding: clamp(3rem, 7vw, 6rem) var(--gap); }
+    .section-inner { max-width: var(--max-w); margin: 0 auto; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+    }
+
+    .section-title {
+      font-family: var(--head-font);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .section-link {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--rose);
+      border-bottom: 1px solid var(--rose-light);
+      padding-bottom: 1px;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .section-link:hover { color: var(--ink); }
+
+    /* ── FEATURED POST ── */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--linen-mid);
+    }
+
+    .featured-image {
+      background: linear-gradient(135deg, #4A2840 0%, #2E1B2E 40%, #1A3028 100%);
+      min-height: 420px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+
+    .featured-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(46,27,46,.85) 0%, transparent 50%);
+    }
+
+    .featured-tag {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: var(--sage);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .3rem .75rem;
+      border-radius: 999px;
+    }
+
+    .featured-image-text { position: relative; z-index: 1; }
+    .featured-image-text h2 {
+      font-family: var(--head-font);
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: .6rem;
+      letter-spacing: -0.02em;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: 0.8rem;
+      color: rgba(248,243,238,.65);
+    }
+    .post-meta-dot { color: var(--rose); }
+
+    .featured-body {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .featured-excerpt {
+      font-size: 1rem;
+      color: var(--ink-soft);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .read-more {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--rose);
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      transition: gap .2s;
+    }
+    .read-more:hover { gap: .7rem; }
+
+    /* ── POST GRID ── */
+    .post-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .post-grid-container.show-less .post-card:nth-child(n+2) {
+      display: none !important;
+    }
+
+    .post-card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .post-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(46,27,46,.1); }
+
+    .card-thumb {
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .card-thumb-1 { background: linear-gradient(135deg, #5A2845 0%, #3D1C3D 100%); }
+    .card-thumb-2 { background: linear-gradient(135deg, #1E3D32 0%, #2A4A3A 100%); }
+    .card-thumb-3 { background: linear-gradient(135deg, #3D2535 0%, #5A3E4A 100%); }
+
+    .card-tag {
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.22);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      padding: .25rem .65rem;
+      border-radius: 999px;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.4rem 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-body h3 {
+      font-family: var(--head-font);
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: .6rem;
+    }
+
+    .card-body p {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: .75rem;
+      border-top: 1px solid var(--linen-mid);
+    }
+
+    .card-author { display: flex; align-items: center; gap: .5rem; }
+    .author-dot {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .dot-rose { background: var(--rose); }
+    .dot-sage { background: var(--sage); }
+    .dot-ink  { background: var(--ink-soft); }
+
+    .author-name { font-size: 0.78rem; font-weight: 600; color: var(--ink-soft); }
+    .card-date { font-size: 0.75rem; color: var(--rose); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(248,243,238,.7);
+      padding: clamp(2.5rem, 5vw, 4rem) var(--gap) 2rem;
+    }
+
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand .footer-logo {
+      font-family: var(--head-font);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: .5rem;
+    }
+
+    .footer-brand .footer-tagline {
+      font-size: 0.85rem;
+      color: rgba(248,243,238,.55);
+      line-height: 1.65;
+      max-width: 30ch;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: .55rem; }
+    .footer-col a { font-size: 0.88rem; color: rgba(248,243,238,.6); transition: color .2s; }
+    .footer-col a:hover { color: var(--rose); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p { font-size: 0.8rem; color: rgba(248,243,238,.4); }
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .featured-grid { grid-template-columns: 1fr; }
+      .post-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .post-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      Survivors Vault
+      <span>by Survivors Project</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#stories">Stories</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">A space to be heard</p>
+      <h1>Stories that <em>hold</em> and stories that <em>heal</em></h1>
+      <p class="hero-desc">Survivors Vault is a living archive of courage — where people who have walked through darkness share what they've learned.</p>
+      <div class="hero-actions">
+        <a href="#stories" class="btn-primary">Read Stories</a>
+      </div>
+    </div>
+    <div class="hero-quote">
+      <blockquote>
+        I didn't want to be defined by what happened to me. I wanted to be known for how I chose to live after it.
+      </blockquote>
+      <div class="quote-attr">
+        <div class="quote-avatar">M</div>
+        <div>
+          <p class="quote-name">Meera A.</p>
+          <p class="quote-role">Contributor · Survivors Project, 2024</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURED STORY ── -->
+<section class="section" id="stories">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">Featured Story</h2>
+    </div>
+    <div class="featured-grid">
+      <div class="featured-image">
+        <div class="featured-image-overlay"></div>
+        <span class="featured-tag">Survivor Story</span>
+        <div class="featured-image-text">
+          <h2>When the phone rang at 3 a.m.: a decade of rebuilding</h2>
+          <div class="post-meta">
+            <span>Priya Nandan</span>
+            <span class="post-meta-dot">·</span>
+            <span>Oct 12, 2026</span>
+          </div>
+        </div>
+      </div>
+      <div class="featured-body">
+        <p class="featured-excerpt">
+          I used to think survival was a finish line — a place you crossed and then stood, breathless and safe, on the other side...
+        </p>
+        <a href="story.html?id=1" class="read-more">
+          Read Priya's story →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── POST GRID ── -->
+<section class="section" style="padding-top: 0;">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">Latest Stories</h2>
+      <a id="toggle-stories-btn" onclick="toggleStories()" class="section-link">Show More →</a>
+    </div>
+
+    <div class="post-grid post-grid-container show-less" id="post-grid">
+
+      <article class="post-card">
+        <div class="card-thumb card-thumb-1">
+          <span class="card-tag">Mental Health</span>
+        </div>
+        <div class="card-body">
+          <h3>Learning to name what you feel: a guide to emotional vocabulary</h3>
+          <p>Trauma often leaves us with a shrinking vocabulary for our own inner life.</p>
+          <div class="card-footer">
+            <div class="card-author">
+              <div class="author-dot dot-rose">R</div>
+              <span class="author-name">Rohan Mehta</span>
+            </div>
+            <a href="story.html?id=2" class="card-date">Read Story →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="card-thumb card-thumb-2">
+          <span class="card-tag">Community</span>
+        </div>
+        <div class="card-body">
+          <h3>You don't have to explain yourself to people who won't listen</h3>
+          <p>On the quiet grief of being disbelieved — and the relief that comes when you stop explaining.</p>
+          <div class="card-footer">
+            <div class="card-author">
+              <div class="author-dot dot-sage">A</div>
+              <span class="author-name">Ananya S.</span>
+            </div>
+            <a href="story.html?id=3" class="card-date">Read Story →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="card-thumb card-thumb-3">
+          <span class="card-tag">Recovery</span>
+        </div>
+        <div class="card-body">
+          <h3>The first year after: what nobody tells you about the 'after'</h3>
+          <p>Crisis support exists for the acute moment. But what about the long stretch that follows?</p>
+          <div class="card-footer">
+            <div class="card-author">
+              <div class="author-dot dot-ink">K</div>
+              <span class="author-name">Kavya R.</span>
+            </div>
+            <a href="story.html?id=4" class="card-date">Read Story →</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <p>© 2026 Survivors Project. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleStories() {
+    const grid = document.getElementById('post-grid');
+    const btn = document.getElementById('toggle-stories-btn');
+    if (grid.classList.contains('show-less')) {
+      grid.classList.remove('show-less');
+      btn.textContent = 'Show Less ←';
+    } else {
+      grid.classList.add('show-less');
+      btn.textContent = 'Show More →';
+    }
+  }
+</script>
+
+</body>
+</html>
