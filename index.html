@@ -35,6 +35,16 @@
       :root{--ink:#F0E8F0;--ink-soft:#C0A8C8;--rose:#D4909A;--rose-light:#6A3840;
         --linen:#1E1420;--linen-mid:#2A1E2E;--white:#17101A;--sage-light:#2A4A3A;}
     }
+    @media(prefers-color-scheme:dark){
+  .hero {
+    background: #17101A;
+    color: #F0E8F0;
+  }
+  .hero-desc { color: rgba(240,232,240,.72); }
+  .btn-ghost  { color: rgba(240,232,240,.82); border-color: rgba(240,232,240,.32); }
+  .hero-quote { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.13); }
+  .hero-quote blockquote { color: #F0E8F0; }
+}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{font-family:var(--body);background:var(--linen);color:var(--ink);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
