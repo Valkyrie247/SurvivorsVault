@@ -11,7 +11,7 @@
   <!-- ══ EMBEDDED DATA — auto-updated on export ══ -->
   <script type="application/json" id="sv-config">
   {
-    "adminPassword": "admin",
+    "adminPassword": "admin@123",
     "instagramUrl": "https://instagram.com/thesurvivorsproject0",
     "heroQuote": "I didn't want to be defined by what happened to me. I wanted to be known for how I chose to live after it.",
     "heroQuoteAuthor": "Anonymous",
@@ -541,12 +541,12 @@ function voicesHTML() {
   return `<section class="voices" id="voices"><div class="voices-inner">
     <div class="voices-hd"><p class="lbl">Community voices</p><h2>Words that found us along the way</h2></div>
     <div class="voices-grid">
-      <div class="voice-card"><blockquote>quote goes here </blockquote>
-        <div class="v-attr"><div class="v-dot vd1">N</div><div><p class="v-name">name, reader</p><p class="v-det"> · shared anonymously</p></div></div></div>
+      <div class="voice-card"><blockquote> If me writing could help someone, why wouldn't I? </blockquote>
+        <div class="v-attr"><div class="v-dot vd1">N</div><div><p class="v-name">Aarav</p><p class="v-det">Content Writer</p></div></div></div>
       <div class="voice-card"><blockquote> Survivors Project gave me a reason to write again.</blockquote>
         <div class="v-attr"><div class="v-dot vd2">T</div><div><p class="v-name"></p><p class="v-det">Anonymous Contributor</p></div></div></div>
-      <div class="voice-card"><blockquote> quote goes here </blockquote>
-        <div class="v-attr"><div class="v-dot vd3">L</div><div><p class="v-name"> author name </p><p class="v-det">· Bengaluru</p></div></div></div>
+      <div class="voice-card"><blockquote> You can recognize survivors of abuse by their courage. When silence is so very inviting, they step forward and share their truth so others know they aren't alone. </blockquote>
+        <div class="v-attr"><div class="v-dot vd3">L</div><div><p class="v-name"> Jeanne McElvaney</p><p class="v-det">·Healing Insights: Effects of Abuse for Adults Abused as Children</p></div></div></div>
     </div>
   </div></section>`;
 }
@@ -583,13 +583,15 @@ function footerHTML() {
       <div class="footer-col" id="resources"><h4>Support</h4><ul>
         <li><a href="${esc(ig)}" target="_blank" rel="noopener">Follow on Instagram</a></li>
         <li><a href="#about">Our Mission</a></li>
-        <li><a href="#about">Submit a Story</a></li>
-        <li><a href="#about">Crisis Lines</a></li>
+        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdnDIaUfII1jbOSeX67yjiXsGbiYfEEbk29YLh6OFls9tDKQA/viewform" target="_blank" rel="noopener noreferrer">Submit a Story</a></li>
+        <li><a href="https://findahelpline.com" target="_blank" rel="noopener noreferrer">Crisis Lines</a></li>
+
       </ul></div>
     </div>
     <div class="footer-btm">
       <p>© ${new Date().getFullYear()} Survivors Project. All rights reserved.</p>
-      <p class="crisis">In crisis? Call iCall: 9152987821</p>
+      <p class="crisis">In crisis? India: Call 1091 (Women) or 112 (Emergency) <br> US / Canada: Call 1-800-656-4673 (RAINN) or text HOME to 741741 <br> UK: Call 0808 500 2222 <br> Australia: Call 1800 737 732<br>
+      Other Countries: Find confidential local support at findahelpline.com</p>
     </div>
   </div></footer>`;
 }
